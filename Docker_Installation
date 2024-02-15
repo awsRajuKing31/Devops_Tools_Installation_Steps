@@ -1,0 +1,4 @@
+sudo apt update
+Sudo apt install docker.io -y
+Sudo usermod -aG docker $USER
+sudo systemctl restart docker
