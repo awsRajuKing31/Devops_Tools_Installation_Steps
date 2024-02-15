@@ -1,0 +1,57 @@
+Kubeadm Installation Steps
+
+# using 'sudo su' is not a good practice.
+sudo apt update
+sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo apt install docker.io -y
+sudo usermod -aG docker $USER
+sudo systemctl enable --now docker 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Adding GPG keys<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+curl -fsSL "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg
+
+>>>>>>>>>>>>>>>>>Add the repository to the sourcelist<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+echo 'deb https://packages.cloud.google.com/apt kubernetes-xenial main' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt update 
+sudo apt install kubeadm=1.20.0-00 kubectl=1.20.0-00 kubelet=1.20.0-00 -y  --> you can change the version 
+
+Sample Command run on master node
+
+Master Node
+Initialize the Kubernetes master node.
+
+sudo kubeadm init
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+For Weave network:
+
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+image
+
+Generate a token for worker nodes to join:
+
+sudo kubeadm token create --print-join-command
+
+###################Make sure all firewall port open needed for kubernetes#################
+
+Worker Node
+sudo su
+
+sudo kubeadm reset pre-flight checks
+
+Paste the join-command you copy from the master node and append --v=5. 
+
+On Master Node you can run 
+
+kubectl get nodes
+
+IF we want To Give Name for Nodes
+
+kubectl label node <node-name> node-role.kubernetes.io/worker=worker
+
+kubectl run hello-world-pod --image=busybox --restart=Never --command -- sh -c "echo 'Hello, World' && sleep 3600"
+image
