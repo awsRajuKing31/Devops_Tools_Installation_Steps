@@ -1,4 +1,11 @@
-First install Kubectl -----> Steps to install Kubectl
+First install Kubectl -----> 
+Install docker 
+sudo apt install docker.io -y
+sudo -aG docker $USER
+sudo systemctl restart docker
+----
+Steps to install Kubectl
+
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 sudo chmod +x ./kubectl
