@@ -1,0 +1,19 @@
+First install Kubectl -----> Steps to install Kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+sudo chmod +x ./kubectl
+sudo mv ./kubectl /bin/kubectl
+kubectl version --client
+---
+After this second step is to install the minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+-----
+After this to run the Minkube cluster steps are
+minkube start -p <AnyName> --driver=docker --> for single cluster
+minikube start --nodes 2 -p <AnyName> --driver=docker   ========>>>>> this is for two node cluster
+minikube ip -p <cluster name>
+minikube addons enable ingress -p <cluster name>
+minikube addons enable metrics-server  --> for enabling metric in kubernetes minikube cluster
+kubectl top pods
+minikube ssh
