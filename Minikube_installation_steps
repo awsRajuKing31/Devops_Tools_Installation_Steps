@@ -1,7 +1,7 @@
-First install Kubectl -----> 
+First  
 Install docker 
 sudo apt install docker.io -y
-sudo -aG docker $USER
+sudo usermod -aG docker $USER
 sudo systemctl restart docker
 ----
 Steps to install Kubectl
